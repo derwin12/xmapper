@@ -20,5 +20,5 @@ from xMapper.views import home  # Import the view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),  # Add this
+    path('', home, name='home'),
 ]
