@@ -1,5 +1,5 @@
 """
-WSGI config for xmapper project.
+WSGI config for xMapper project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'xmapper.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'xMapper.settings')
 
 application = get_wsgi_application()
