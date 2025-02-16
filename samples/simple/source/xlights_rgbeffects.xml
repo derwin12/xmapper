@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xrgb>
   <models>
-    <model DisplayAs="Candy Canes" StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm3="1" name="Candy Canes" parm2="18" Controller="No Controller" LayoutGroup="Default" parm1="1" WorldPosX="516.8193" WorldPosY="436.3373" WorldPosZ="0.0000" X2="32.963867" Y2="0.000031" Z2="0.000000" RotateX="0.00000000" Height="0.868422" Angle="0" versionNumber="7" StartChannel="151">
+    <model DisplayAs="My Candy Canes" StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm3="1" name="Candy Canes" parm2="18" Controller="No Controller" LayoutGroup="Default" parm1="1" WorldPosX="516.8193" WorldPosY="436.3373" WorldPosZ="0.0000" X2="32.963867" Y2="0.000031" Z2="0.000000" RotateX="0.00000000" Height="0.868422" Angle="0" versionNumber="7" StartChannel="151">
       <ControllerConnection Protocol="ws2811"/>
     </model>
     <model StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm2="50" parm3="1" name="Tree" parm1="16" DisplayAs="Tree 360" Controller="No Controller" LayoutGroup="Default" WorldPosX="768.6085" WorldPosY="614.2108" WorldPosZ="0.0000" ScaleX="0.9214" ScaleY="0.7628" ScaleZ="0.9214" RotateX="0.00000000" RotateY="0.00000000" RotateZ="0.00000000" versionNumber="7" StartChannel="2845">
