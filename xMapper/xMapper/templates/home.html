@@ -3,13 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Upload xLights Files</title>
 </head>
 <body>
-    <h1>Welcome</h1>
-    <form method="POST">
+    <h1>Upload xLights Files</h1>
+
+    <form method="POST" enctype="multipart/form-data" action="">
         {% csrf_token %}
-        <button type="submit">Process</button>
+
+        <label for="rgbeffects">Upload Source xlights_rgbeffects.xml:</label>
+        <input type="file" name="rgbeffects" id="rgbeffects" accept=".xml" required>
+        <span id="rgbeffects-source-placeholder">No file selected</span>
+        <br><br>
+
+        <label for="rgbeffects-target">Upload Target xlights_rgbeffects.xml:</label>
+        <input type="file" name="rgbeffects-target" id="rgbeffects-target" accept=".xml" required>
+        <span id="rgbeffects-target-placeholder">No file selected</span>
+        <br><br>
+
+        <button type="submit">Process Files</button>
     </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("lastRGBEffects")) {
+                document.getElementById("rgbeffects-source-placeholder").innerText = "Last selected: " + localStorage.getItem("lastRGBEffects");
+            }
+            if (localStorage.getItem("lastTarget")) {
+                document.getElementById("rgbeffects-target-placeholder").innerText = "Last selected: " + localStorage.getItem("lastTarget");
+            }
+        });
+
+        document.getElementById("rgbeffects").addEventListener("change", function () {
+            if (this.files.length > 0) {
+                localStorage.setItem("lastRGBEffects", this.files[0].name);
+                document.getElementById("rgbeffects-source-placeholder").innerText = "Selected: " + this.files[0].name;
+            }
+        });
+
+        document.getElementById("rgbeffects-target").addEventListener("change", function () {
+            if (this.files.length > 0) {
+                localStorage.setItem("lastTarget", this.files[0].name);
+                document.getElementById("rgbeffects-target-placeholder").innerText = "Selected: " + this.files[0].name;
+            }
+        });
+    </script>
 </body>
 </html>

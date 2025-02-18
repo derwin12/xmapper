@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.files.storage import default_storage
 from django.http import HttpResponse
 import xml.etree.ElementTree as ET
 import os
@@ -9,8 +10,17 @@ def home(request):
         source_xml_path = "c:/users/Daryl/PycharmProjects/xmapper/samples/simple/source/xlights_rgbeffects.xml"
         target_xml_path = "c:/users/Daryl/PycharmProjects/xmapper/samples/simple/target/xlights_rgbeffects.xml"
 
+        rgbeffects_file = request.FILES.get("rgbeffects")
+        rgbeffects_target_file = request.FILES.get("rgbeffects-target")
+
+        if rgbeffects_file and rgbeffects_target_file:
+            # Save the uploaded files
+            rgbeffects_path = default_storage.save(f"uploads/{rgbeffects_file.name}", rgbeffects_file)
+            rgbeffects_target_path = default_storage.save(f"uploads/{rgbeffects_target_file.name}", rgbeffects_target_file)
+
+
         source_models = extract_models(source_xml_path)
-        target_models = extract_models(target_xml_path)
+        target_models = extract_models(rgbeffects_target_path)
         print(source_models)
         print(target_models)
 
@@ -21,7 +31,6 @@ def home(request):
         return render(request, "result.html", {"result": source_models, "result2": target_models, "mapped": mapped_models, "res":formatted_res })  # Pass result to template
 
     return render(request, "home.html")  # Show initial page
-
 
 def get_mapped_models(source_models, target_models):
     """Finds models that exist in both source and target lists."""
