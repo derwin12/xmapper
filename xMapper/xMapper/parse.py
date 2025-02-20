@@ -60,6 +60,7 @@ def parse_models(xml_string):
         if controller is not None:
             model_data["ControllerProtocol"] = controller.get("Protocol")  # Store controller protocol
 
+        print("Working on ....", model_data['name'])
         model_data["ModelType"] = classify_model(model_data, cache)  # Add model classification
         models.append(model_data)
 
@@ -67,11 +68,14 @@ def parse_models(xml_string):
     return models
 
 def print_model_categories(models):
-    for model in models:
+    print("\nModel and Category:")
+
+    for model in sorted(models, key=lambda m: m['name']):
         print(f"Model Name: {model['name']}, DisplayAs: {model['DisplayAs']}, Category: {model['ModelType']}")
 
 def print_unknown_model_categories(models):
     print("\nUnknown Models:")
+
     for model in models:
         if 'ModelType' in model:
             if( model['ModelType'] == "Unknown" ):
@@ -111,18 +115,18 @@ def read_xml_file(file_path):
 
 if __name__ == "__main__":
     import sys
-
     if "--test" in sys.argv:
         unittest.main()
+    else:
+        source_xml_path = "c:/users/Daryl/PycharmProjects/xmapper/samples/simple/source/xlights_rgbeffects.xml"
 
-    source_xml_path = "c:/users/Daryl/PycharmProjects/xmapper/samples/simple/source/xlights_rgbeffects.xml"
+        models_xml = read_xml_file(source_xml_path)
+        #models_xml = extract_models(source_xml_path)
+        parsed_models = parse_models(models_xml)
+        #dump_model_keys_and_values(models[0])
 
-    models_xml = read_xml_file(source_xml_path)
-    #models_xml = extract_models(source_xml_path)
-    models = parse_models(models_xml)
-    #dump_model_keys_and_values(models[0])
-
-    print_unknown_model_categories(models_xml)
+        print_model_categories(parsed_models)
+        print_unknown_model_categories(parsed_models)
 
 
 
