@@ -22,6 +22,9 @@
     <model StringType="RGB Nodes" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm2="50" parm3="1" name="Matrix-2" StartSide="T" DisplayAs="Horiz Matrix" parm1="16" Controller="No Controller" LayoutGroup="Default" Description="T:Matrix_Column" WorldPosX="108.5121" WorldPosY="423.5904" WorldPosZ="0.0000" ScaleX="0.7395" ScaleY="7.4488" ScaleZ="0.0204" RotateX="0.00000000" RotateY="0.00000000" RotateZ="0.00000000" versionNumber="7" StartChannel="2899">
       <ControllerConnection Protocol="ws2811"/>
     </model>
+    <model StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm2="50" parm3="1" DisplayAs="Tree 360" Controller="No Controller" LayoutGroup="Default" parm1="1" TreeSpiralRotations="5.000000" name="STree" WorldPosX="725.4639" WorldPosY="455.7590" WorldPosZ="0.0000" ScaleX="0.4689" ScaleY="0.4235" ScaleZ="0.4689" RotateX="0.00000000" RotateY="0.00000000" RotateZ="0.00000000" versionNumber="7" StartChannel="7699">
+      <ControllerConnection Protocol="ws2811"/>
+    </model>
   </models>
   <view_objects>
     <view_object DisplayAs="Gridlines" LayoutGroup="Default" name="Gridlines" GridLineSpacing="50" GridWidth="2000.0" GridHeight="1000.0" Active="1" WorldPosX="0.0000" WorldPosY="0.0000" WorldPosZ="0.0000" ScaleX="1.0000" ScaleY="1.0000" ScaleZ="1.0000" RotateX="-90.00000000" RotateY="-0.00000000" RotateZ="0.00000000" versionNumber="7"/>
