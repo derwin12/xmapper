@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xrgb>
   <models>
+    <model DisplayAs="Arches" StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm1="1" parm3="1" Controller="No Controller" LayoutGroup="Default" name="Triple Arch" LayerSizes="50,50,50" parm2="150" WorldPosX="80.4819" WorldPosY="314.8916" WorldPosZ="0.0000" X2="130.988007" Y2="-37.301270" Z2="0.000000" RotateX="0.00000000" Height="1.000000" Angle="0" versionNumber="7" StartChannel="9349">
+      <ControllerConnection Protocol="ws2811"/>
+    </model>
     <model DisplayAs="Candy Canes" StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm3="1" name="Candy Canes" parm2="18" Controller="No Controller" LayoutGroup="Default" parm1="1" WorldPosX="486.4577" WorldPosY="379.9518" WorldPosZ="0.0000" X2="32.963867" Y2="0.000031" Z2="0.000000" RotateX="0.00000000" Height="0.868422" Angle="0" versionNumber="7" StartChannel="151">
       <ControllerConnection Protocol="ws2811"/>
     </model>
@@ -176,7 +179,7 @@
         <ControllerConnection/>
       </subModel>
     </model>
-    <model DisplayAs="Window Frame" StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm2="50" name="Window Frame" parm1="16" parm3="16" Rotation="CW" Controller="No Controller" LayoutGroup="Default" WorldPosX="673.3073" WorldPosY="301.0844" WorldPosZ="0.0000" ScaleX="1.9659" ScaleY="1.0034" ScaleZ="0.0000" RotateX="0.00000000" RotateY="0.00000000" RotateZ="0.00000000" versionNumber="7" StartChannel="9349">
+    <model DisplayAs="Window Frame" StringType="RGB Nodes" StartSide="B" Dir="L" Antialias="1" PixelSize="2" Transparency="0" parm2="50" name="Window Frame" parm1="16" parm3="16" Rotation="CW" Controller="No Controller" LayoutGroup="Default" WorldPosX="673.3073" WorldPosY="301.0844" WorldPosZ="0.0000" ScaleX="1.9659" ScaleY="1.0034" ScaleZ="0.0000" RotateX="0.00000000" RotateY="0.00000000" RotateZ="0.00000000" versionNumber="7" StartChannel="9799">
       <ControllerConnection Protocol="ws2811"/>
     </model>
   </models>

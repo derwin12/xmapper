@@ -1,5 +1,6 @@
 MODEL_TYPES = {
     "arch": "T:Arch",
+    "triplearch": "T:TripleArch",
     "candy cane": "T:CandyCane",
     "cross": "T:Cross",
     "cube": "T:Cube",
