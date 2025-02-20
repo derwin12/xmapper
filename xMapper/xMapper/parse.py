@@ -121,6 +121,24 @@ def print_model_categories(models):
     for model in models:
         print(f"Model Name: {model['name']}, DisplayAs: {model['DisplayAs']}, Category: {model['ModelType']}")
 
+def print_unknown_model_categories(models):
+    print("Unknown Models:")
+    for model in models:
+        if( model['ModelType'] == "Unknown" ):
+            print(f"Model Name: {model['name']}, DisplayAs: {model['DisplayAs']}, Category: {model['ModelType']}")
+
+
+def dump_model_keys_and_values(model):
+    """
+    Dumps all key-value pairs for a given model.
+
+    Args:
+        model (dict): A dictionary representing a model.
+    """
+    print("Dumping model keys and values:")
+    for key, value in model.items():
+        print(f"{key}: {value}")
+
 
 class TestParseModels(unittest.TestCase):
     def test_parse_models(self):
@@ -135,12 +153,11 @@ class TestParseModels(unittest.TestCase):
         self.assertEqual(models[1]["name"], "Tree")
         self.assertEqual(models[1]["ModelType"], "T:Tree")
 
-        print_model_categories(models)
-
 
 if __name__ == "__main__":
     models = parse_models(xml_data)
-    print_model_categories(models)
+    print_unknown_model_categories(models)
+    # dump_model_keys_and_values(models[0])
 
     import sys
 
