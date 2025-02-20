@@ -1,4 +1,5 @@
 from data_types import MODEL_TYPES
+from classify_custom import classify_custom
 import re
 
 
@@ -28,10 +29,9 @@ def classify_model(model, cache):
     #  return cache[name]
 
     # Handle Trees first
-    print(name, display_as)
+    #print(name, display_as)
     if (display_as == 'tree 360'):
         if('TreeSpiralRotations' in model):
-            print("Found a spiral")
             cache[name] = "T:Spiral_Tree"
             return "T:Spiral_Tree"
 
@@ -43,13 +43,19 @@ def classify_model(model, cache):
         cache[name] = "T:Mega_Tree"
         return "T:Mega_Tree"
 
-    # Check for layers in an arch
     if (display_as == 'arches'):
         if ('LayerSizes' in model):
             values = [x.strip() for x in model["LayerSizes"].split(",")]
             if (len(values) >= 2):
                 cache[name] = "T:TripleArch"
                 return "T:TripleArch"
+
+    if (display_as == 'custom'):
+            print("Search custom models")
+            cat = classify_custom(model)
+            if (cat != ""):
+                cache['name'] = cat
+                return cat
 
     # Match based on name and model_type
     for key, model_type in MODEL_TYPES.items():
