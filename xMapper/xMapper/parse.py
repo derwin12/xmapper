@@ -1,7 +1,10 @@
 import xml.etree.ElementTree as ET
 import unittest
+from classify import classify_model
 import json
 import os
+from data_types import MODEL_TYPES
+from views import extract_models
 
 CACHE_FILE = "model_classifications.json"
 
@@ -31,27 +34,6 @@ xml_data = '''
   </models>
 '''
 
-MODEL_TYPES = {
-    "arch": "T:Arch",
-    "candy cane": "T:CandyCane",
-    "cross": "T:Cross",
-    "cube": "T:Cube",
-    "flood": "T:Flood",
-    "icicles": "T:Icicles",
-    "line": "T:Line",
-    "matrix": "T:Matrix",
-    "matrix_horizontal": "T:Matrix_Horizontal",
-    "matrix_column": "T:Matrix_Column",
-    "matrix_pole": "T:Matrix_Pole",
-    "snowflake": "T:Snowflake",
-    "sphere": "T:Sphere",
-    "spinner": "T:Spinner",
-    "star": "T:Star",
-    "tune_to": "T:TuneTo",
-    "tree": "T:Tree",
-    "window_frame": "T:WindowFrame"
-}
-
 def load_cache():
     if os.path.exists(CACHE_FILE):
         with open(CACHE_FILE, "r") as file:
@@ -62,50 +44,17 @@ def save_cache(cache):
     with open(CACHE_FILE, "w") as file:
         json.dump(cache, file, indent=4)
 
-def classify_model(model, cache):
-    name = model.get("name", "").lower()
-    display_as = model.get("DisplayAs", "").lower()
-    description = model.get("description", "").lower()
-    pixel_count = int(model.get("parm2", 0))
-
-    if name in cache:
-        return cache[name]
-
-    for key, model_type in MODEL_TYPES.items():
-        if key in name or key in display_as or key in description:
-            cache[name] = model_type
-            return model_type
-
-    # Additional heuristics for classification
-    if "matrix" in display_as and pixel_count > 100:
-        cache[name] = "T:Matrix"
-        return "T:Matrix"
-    if "tree" in display_as:
-        if pixel_count > 100:
-            cache[name] = "T:Tree_Mega"
-            return "T:Tree_Mega"
-        elif pixel_count > 50:
-            cache[name] = "T:Tree_Mini"
-            return "T:Tree_Mini"
-        elif "spiral" in display_as or "spiral" in name:
-            cache[name] = "T:Tree_Spiral"
-            return "T:Tree_Spiral"
-        cache[name] = "T:Tree"
-        return "T:Tree"
-    if "icicle" in display_as:
-        cache[name] = "T:Icicles"
-        return "T:Icicles"
-
-    cache[name] = "Unknown"
-    return "Unknown"
-
 
 def parse_models(xml_string):
     root = ET.fromstring(xml_string)
     models = []
     cache = load_cache()
 
-    for model in root.findall("model"):
+    models_parent = root.find("models")
+    if models_parent is None:
+            raise ValueError("No <models> element found in XML")
+
+    for model in models_parent.findall("model"):
         model_data = {attr: model.get(attr) for attr in model.attrib}  # Store attributes
         controller = model.find("ControllerConnection")
         if controller is not None:
@@ -122,10 +71,11 @@ def print_model_categories(models):
         print(f"Model Name: {model['name']}, DisplayAs: {model['DisplayAs']}, Category: {model['ModelType']}")
 
 def print_unknown_model_categories(models):
-    print("Unknown Models:")
+    print("\nUnknown Models:")
     for model in models:
-        if( model['ModelType'] == "Unknown" ):
-            print(f"Model Name: {model['name']}, DisplayAs: {model['DisplayAs']}, Category: {model['ModelType']}")
+        if 'ModelType' in model:
+            if( model['ModelType'] == "Unknown" ):
+                print(f"Model Name: {model['name']}, DisplayAs: {model['DisplayAs']}, Category: {model['ModelType']}")
 
 
 def dump_model_keys_and_values(model):
@@ -153,14 +103,27 @@ class TestParseModels(unittest.TestCase):
         self.assertEqual(models[1]["name"], "Tree")
         self.assertEqual(models[1]["ModelType"], "T:Tree")
 
+# Read and parse the XML file
+def read_xml_file(file_path):
+    with open(file_path, "r", encoding="utf-8") as file:
+        xml_content = file.read()
+    return xml_content
 
 if __name__ == "__main__":
-    models = parse_models(xml_data)
-    print_unknown_model_categories(models)
-    # dump_model_keys_and_values(models[0])
-
     import sys
 
     if "--test" in sys.argv:
         unittest.main()
+
+    source_xml_path = "c:/users/Daryl/PycharmProjects/xmapper/samples/simple/source/xlights_rgbeffects.xml"
+
+    models_xml = read_xml_file(source_xml_path)
+    #models_xml = extract_models(source_xml_path)
+    models = parse_models(models_xml)
+    #dump_model_keys_and_values(models[0])
+
+    print_unknown_model_categories(models_xml)
+
+
+
 
