@@ -17,7 +17,7 @@ def close_match(key, name, display_as, description):
     return key_processed in name_processed or key_processed in display_as_processed or key_processed in description_processed
 
 
-def classify_model(model, cache):
+def classify_model(model, cache, vendor_models):
     name = model.get("name", "").lower()
     display_as = model.get("DisplayAs", "").lower()
     description = model.get("description", "").lower()
@@ -50,9 +50,13 @@ def classify_model(model, cache):
                 cache[name] = "T:TripleArch"
                 return "T:TripleArch"
 
+    if 'Description' in model:
+        if model['Description'][:2] == "T:":
+            return model['Description']
+
     if (display_as == 'custom'):
             print("Search custom models")
-            cat = classify_custom(model)
+            cat = classify_custom(model, vendor_models)
             if (cat != ""):
                 cache['name'] = cat
                 return cat

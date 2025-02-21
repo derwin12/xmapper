@@ -29,6 +29,7 @@ def load_xmodel_files(directory):
 # ======= Run the Script =======
 if __name__ == "__main__":
     # Change this path to the directory where your .xmodel files are stored
+    print(os.getcwd())
     directory_path = "../../samples/Vendor Models"
 
     print(f"Scanning directory: {directory_path}")
