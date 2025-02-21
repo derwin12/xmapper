@@ -49,5 +49,46 @@ Identify other groups not quite All (eg All minus MT, Yard, All House, All Last 
 [T:Tree] – Treat as a tree
 [T:WindowFrame] – Treat as a window / door frame. 
 
+PPD:
+All Display
+All House
+All Yard
+All House Decorations
+Arches
+Candy Cands
+Spiral Trees
+Stars on Trees
+Mini Trees
+All Stars
+Pixel Pole Stars
+Pixel Poles
+Column Matrices
+House Verticals
+Other Verticals
+Windows and Doors
+All Roof
+Roof Lower
+Roof Upper
+Icicles
+Gutters
+Yard Borders
+Snowflake Arms
+Snowflake Rings
+Snowflakes
+Spinner Big Arms
+Spinner Rings
+Spinner Small Arms
+Spinners
+Door Wreath Stars
+Wreath Rings
+Box
+Door Star Wreath
+Matrix
+Garage Matrix
+Mega Tree
+MegaTree Star
+Ribbon Tree
+
+
 TODO
 Halloween Props

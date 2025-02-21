@@ -13,6 +13,8 @@ MODEL_TYPES = {
     "matrix_horizontal": "T:Matrix_Horizontal",
     "matrix_column": "T:Matrix_Column",
     "matrix_pole": "T:Matrix_Pole",
+    "DmxMovingHeadAdv" : "T:MH",
+    "singing": "T:Singing",
     "snowflake": "T:Snowflake",
     "sphere": "T:Sphere",
     "spinner": "T:Spinner",
@@ -21,5 +23,6 @@ MODEL_TYPES = {
     "tree": "T:Tree",
     "spiral_tree": "T:Spiral_Tree",
     "mega_tree": "T:Mega_Tree",
-    "window_frame": "T:WindowFrame"
+    "window_frame": "T:WindowFrame",
+    "wreath": "T:Wreath"
 }

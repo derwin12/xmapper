@@ -3,7 +3,7 @@ from classify_custom import classify_custom
 import re
 
 
-def fuzzy_match(key, name, display_as, description):
+def close_match(key, name, display_as, description):
     # Preprocess the key and the text fields by removing spaces and underscores
     def preprocess(text):
         return re.sub(r'[\s_]+', '', text).lower()  # Remove spaces and underscores, and convert to lowercase
@@ -59,7 +59,7 @@ def classify_model(model, cache):
 
     # Match based on name and model_type
     for key, model_type in MODEL_TYPES.items():
-        if fuzzy_match(key, name, display_as, description):
+        if close_match(key, name, display_as, description):
             cache[name] = model_type
             return model_type
         # else:
