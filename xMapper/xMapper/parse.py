@@ -104,7 +104,9 @@ def read_xml_file(file_path):
 
 if __name__ == "__main__":
     # source_xml_path = "c:/users/Daryl/PycharmProjects/xmapper/samples/simple/source/xlights_rgbeffects.xml"
-    source_xml_path = "F:/ShowFolderQA/xlights_rgbeffects.xml"
+    print(os.getcwd())
+    source_xml_path = './samples/simple/source/v1/xlights_rgbeffects.xml'
+    #source_xml_path = "F:/ShowFolderQA/xlights_rgbeffects.xml"
     models_xml = read_xml_file(source_xml_path)
 
     print(os.getcwd())

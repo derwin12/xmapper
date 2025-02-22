@@ -65,6 +65,7 @@ def classify_model(model, cache, vendor_models):
     for key, model_type in MODEL_TYPES.items():
         if close_match(key, name, display_as, description):
             cache[name] = model_type
+            print("Close name match to", model_type)
             return model_type
         # else:
         #   print('Failed search', key, ' not found in ', name, display_as, description)

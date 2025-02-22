@@ -41,12 +41,14 @@ def classify_custom(model, vendor_models):
     numbers = [int(x) for x in custom_model_list if x.isdigit()]
     model_max_pixel = max(numbers)
     print('Checking pixel counts for ' + model['name'] + " Cnt=" + str(model_max_pixel))
+    found_possible = False
     for vendor_model_name, model_data in vendor_models.items():
         vendor_custom_model_list = model_data['CustomModel'].replace(';', ',').replace('|', ',').split(',')
         numbers = [int(x) for x in vendor_custom_model_list if x.isdigit()]
         max_pixel = max(numbers)
         # print(max_pixel, vendor_model_name)
         if model_max_pixel == max_pixel:
+            found_possible = True
             print("Found matching pixel counts with vendor", vendor_model_name)
             # grid size check
             if len(custom_model_list) == len(vendor_custom_model_list):
@@ -59,6 +61,8 @@ def classify_custom(model, vendor_models):
                 #print("layout", custom_model_list)
                 #print("vendor", vendor_custom_model_list)
     # perhaps check for submodel matches
+    if not found_possible:
+        print("No matching vendor custom models found")
 
     return ""
 
