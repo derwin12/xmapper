@@ -6,4 +6,4 @@
 /.idea/modules.xml
 /xMapper/xMapper/model_classifications.json
 /.idea/misc.xml
-/.env
+.env
