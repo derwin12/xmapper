@@ -1,11 +1,6 @@
-asgiref==3.8.1
 Django==5.1.6
-sqlparse==0.5.3
-tzdata==2025.1
-fuzzywuzzy
-python-Levenshtein
-requests
-flask
-flask_sqlalchemy
-flask_dance
-dotenv
+fuzzywuzzy~=0.18.0
+flask~=3.1.0
+dotenv~=0.9.9
+
+python-dotenv~=1.0.1

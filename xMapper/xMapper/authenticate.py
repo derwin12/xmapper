@@ -1,17 +1,18 @@
 import os
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.contrib.discord import make_discord_blueprint, discord
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import secrets
 
 # Load environment variables from .env
 load_dotenv()
 
 # Flask app setup
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallback_secret")
+app.secret_key = os.getenv("FLASK_SECRET_KEY", secrets.token_hex(32))
 
 # Database setup (using DATABASE_URL from .env)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///logins.db")
@@ -35,7 +36,11 @@ with app.app_context():
 google_bp = make_google_blueprint(
     client_id=os.getenv("GOOGLE_CLIENT_ID"),
     client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
-    scope=["profile", "email"],
+    scope=[
+        "openid",
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+    ],  # Now explicitly matches what Google returns
     redirect_to="google_login",
 )
 app.register_blueprint(google_bp, url_prefix="/login")
@@ -51,7 +56,7 @@ app.register_blueprint(discord_bp, url_prefix="/login")
 
 # Function to check if IP is abusing the system
 def is_ip_abusing(ip):
-    time_limit = datetime.utcnow() - timedelta(minutes=10)  # Look at last 10 minutes
+    time_limit = datetime.now(timezone.utc) - timedelta(minutes=10) # Look at last 10 minutes
     recent_logins = LoginLog.query.filter(LoginLog.ip_address == ip, LoginLog.timestamp > time_limit).count()
     return recent_logins > 5  # Adjust threshold as needed
 
@@ -99,7 +104,18 @@ def discord_login():
     db.session.add(login_event)
     db.session.commit()
 
-    return f"Logged in as {user_info['username']}#{user_info['discriminator']}"
+    # Redirect to landing page with user info
+    return redirect(url_for("landing_page", provider="Discord", username=f"{user_info['username']}#{user_info['discriminator']}"))
+
+@app.route("/landing")
+def landing_page():
+    # Get query parameters
+    provider = request.args.get("provider")
+    username = request.args.get("username")
+
+    # Render a landing page template
+    return render_template("landing.html", provider=provider, username=username)
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, ssl_context=("../cert.pem", "../key.pem"))
