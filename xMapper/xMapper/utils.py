@@ -21,3 +21,9 @@ def fuzzy_match(str1, str2, threshold=80):
     str2_normalized = normalize_string(str2)
     similarity_ratio = fuzz.partial_ratio(str1_normalized, str2_normalized)
     return similarity_ratio >= threshold
+
+# Read and parse the XML file
+def read_xml_file(file_path):
+    with open(file_path, "r", encoding="utf-8") as file:
+        xml_content = file.read()
+    return xml_content
