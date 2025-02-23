@@ -86,6 +86,7 @@ def dump_group_keys_and_values(groups):
     for key, value in groups.items():
         print(f"{key}: {value}")
 
+# If group contains all of one model type then store as G:<modeltype>
 
 if __name__ == "__main__":
     print(os.getcwd())
