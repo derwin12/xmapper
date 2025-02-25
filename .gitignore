@@ -7,3 +7,6 @@
 /xMapper/xMapper/model_classifications.json
 /.idea/misc.xml
 .env
+/xMapper/cert.pem
+/xMapper/key.pem
+/xMapper/xMapper/instance/logins.db
