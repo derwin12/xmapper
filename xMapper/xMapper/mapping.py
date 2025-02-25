@@ -122,7 +122,7 @@ def create_mapping(set1_models, set1_groups, set2_models, set2_groups, threshold
     return mapping
 
 
-def save_mapping_file(mapping, filename="xlights_mapping.xmap"):
+def save_mapping_file(models, groups, mapping, filename="xlights_mapping.xmap"):
     """Save mapping to a file in xLights format.
 
     Outputs all source models on separate lines first,
@@ -131,15 +131,15 @@ def save_mapping_file(mapping, filename="xlights_mapping.xmap"):
     with open(filename, 'w') as f:
         # First list all source models
         f.write("false\n")
-        for source in mapping.keys():
-            f.write(f"{source}\n")
-
-        # Add a separator
-        f.write("\n# Source\tTarget\n")
+        f.write(f"{len(models) + len(groups)}\n")
+        for model in models:
+            f.write(f"{model['name']}\n")
+        for group in groups:
+            f.write(f"{group['attributes']['name']}\n")
 
         # Then list all source-target pairs
         for source, target in mapping.items():
-            f.write(f"{source}\t{target}\n")
+            f.write(f"{source}\t\t\t{target}\twhite\n")
 
     print(f"Mapping saved to {filename}")
     return filename
@@ -150,7 +150,7 @@ def print_mapping(mapping):
     print("\nxLights Mapping:")
     print("===============")
     for source, target in mapping.items():
-        print(f"{source} = {target}")
+        print(f"{source}  ==  {target}")
     print(f"Total mappings: {len(mapping)}")
 
 
@@ -163,7 +163,7 @@ def mapping(set1_model_data, set1_group_data, set2_model_data, set2_group_data):
     print_mapping(mapping)
 
     # Save the mapping to a file
-    save_mapping_file(mapping)
+    save_mapping_file(set1_model_data, set1_group_data, mapping)
 
 
 if __name__ == "__main__":
