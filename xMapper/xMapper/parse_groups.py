@@ -48,6 +48,12 @@ xml_data ='''
 </xrgb>
 '''
 
+def print_group_types(groups, show_unknown):
+    print("Groups...")
+    for group in groups:
+        if group['attributes']['GroupType'] != 'G:Unknown' or show_unknown:
+            print('Group:', group['attributes']['name'], group['attributes']['GroupType'], '** Made up of Models:', group['attributes']['models'])
+
 def parse_groups(xml_string):
     root = ET.fromstring(xml_string)
     groups = []
@@ -63,12 +69,12 @@ def parse_groups(xml_string):
             print("Skipping inactive ", attributes['name'])
             continue
 
-        print("Working on ....", attributes['name'])
+        #print("Working on ....", attributes['name'])
         models = attributes.get("models", "").split(",") if attributes.get("models") else []
 
         #model_data["ModelType"] = classify_model(model_data, cache, vendor_models)  # Add model classification
         group_data = {
-                "atributes": attributes,
+                "attributes": attributes,
                 "models": models
         }
         groups.append(group_data)
@@ -97,3 +103,6 @@ if __name__ == "__main__":
 
     parsed_groups = parse_groups(groups_xml)
     dump_group_keys_and_values(parsed_groups[0])
+
+    for group in parsed_groups:
+        print(group)

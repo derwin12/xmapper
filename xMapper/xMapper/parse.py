@@ -4,6 +4,8 @@ import json
 import os
 
 from custom_models import load_xmodel_files
+from xMapper.xMapper.classify_groups import get_group_type
+from xMapper.xMapper.parse_groups import parse_groups, dump_group_keys_and_values, print_group_types
 
 xml_data = '''
 <xrgb>
@@ -72,6 +74,7 @@ def print_model_categories(models):
 
     for model in sorted(models, key=lambda m: m['name']):
         print(f"Model Name: {model['name']}, DisplayAs: {model['DisplayAs']}, Category: {model['ModelType']}")
+        print(model)
 
 
 def print_unknown_model_categories(models):
@@ -107,17 +110,28 @@ if __name__ == "__main__":
     print(os.getcwd())
     #source_xml_path = './samples/simple/source/v1/xlights_rgbeffects.xml'
     source_xml_path = "F:/ShowFolderQA/xlights_rgbeffects.xml"
-    models_xml = read_xml_file(source_xml_path)
+    source_xml = read_xml_file(source_xml_path)
 
     print(os.getcwd())
-    directory_path = "./samples/Vendor Models"
+    directory_path = "../../samples/Vendor Models"
     print(f"Scanning directory: {directory_path}")
     vendor_models = load_xmodel_files(directory_path)
 
 
     # models_xml = extract_models(source_xml_path)
-    parsed_models = parse_models(models_xml, vendor_models)
+    parsed_models = parse_models(source_xml, vendor_models)
     # dump_model_keys_and_values(models[0])
 
-    print_model_categories(parsed_models)
-    print_unknown_model_categories(parsed_models)
+    #print_model_categories(parsed_models)
+    #print(parsed_models[0])
+    #print_unknown_model_categories(parsed_models)
+
+    parsed_groups = parse_groups(source_xml)
+    for group in parsed_groups:
+        group_type = get_group_type(group, parsed_models)
+        if group_type is None:
+            group_type = 'G:Unknown'
+        group['attributes']['GroupType'] = group_type
+
+    #dump_group_keys_and_values(parsed_groups[0])
+    print_group_types(parsed_groups, False)
