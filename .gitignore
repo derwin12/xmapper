@@ -10,3 +10,5 @@
 /xMapper/cert.pem
 /xMapper/key.pem
 /xMapper/xMapper/instance/logins.db
+*.map
+*.xmap
