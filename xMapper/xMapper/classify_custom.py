@@ -15,7 +15,7 @@ model_data = [{'DisplayAs': 'Custom', 'StartSide': 'B', 'Dir': 'L', 'parm3': '1'
 
 
 def classify_custom(model, vendor_models):
-    print("Looking for custom model", model['name'])
+    #print("Looking for custom model", model['name'])
     mstr = model['name'].lower()
     mstr_stripped = re.sub(r'[^a-z]', '', mstr)
     # print('Fuzzy match ', model['name'], 'teddy', fuzzy_match(model['name'], 'teddy'))
@@ -25,22 +25,22 @@ def classify_custom(model, vendor_models):
     # check for clues in the name
     # print('Fuzzy match ', model['name'], 'cane', fuzzy_match(model['name'], 'cane'))
     if (fuzzy_match(model['name'], 'spinner')):
-        print("Name match")
+        #print("Name match")
         return 'T:Spinner'
     if (fuzzy_match(model['name'], 'cane')):
-        print("Name match")
+        #print("Name match")
         return 'T:CandyCane'
     if (fuzzy_match(model['name'], 'flake')):
-        print("Name match")
+        #print("Name match")
         return 'T:Snowflake'
     if (fuzzy_match(model['name'], 'bulb')):  # AND has faces TODO
-        print("Name match")
+        #print("Name match")
         return 'T:Singing'
 
     custom_model_list = model['CustomModel'].replace(';', ',').replace('|', ',').split(',')
     numbers = [int(x) for x in custom_model_list if x.isdigit()]
     model_max_pixel = max(numbers)
-    print('Checking pixel counts for ' + model['name'] + " Cnt=" + str(model_max_pixel))
+    #print('Checking pixel counts for ' + model['name'] + " Cnt=" + str(model_max_pixel))
     found_possible = False
     for vendor_model_name, model_data in vendor_models.items():
         vendor_custom_model_list = model_data['CustomModel'].replace(';', ',').replace('|', ',').split(',')
@@ -49,20 +49,22 @@ def classify_custom(model, vendor_models):
         # print(max_pixel, vendor_model_name)
         if model_max_pixel == max_pixel:
             found_possible = True
-            print("Found matching pixel counts with vendor", vendor_model_name)
+            #print("Found matching pixel counts with vendor", vendor_model_name)
             # grid size check
             if len(custom_model_list) == len(vendor_custom_model_list):
-                print("Matching Model Data grid size.")
+                #print("Matching Model Data grid size.")
                 return "T:" + vendor_model_name
             else:
-                print("Non Matching Model Data grid size.", len(custom_model_list), len(vendor_custom_model_list))
+                continue
+                #print("Non Matching Model Data grid size.", len(custom_model_list), len(vendor_custom_model_list))
                 #print(model)
                 #print(model_data)
                 #print("layout", custom_model_list)
                 #print("vendor", vendor_custom_model_list)
     # perhaps check for submodel matches
-    if not found_possible:
-        print("No matching vendor custom models found")
+    #if not found_possible:
+        #print("No matching vendor custom models found")
+
 
     return ""
 
@@ -71,11 +73,11 @@ if __name__ == "__main__":
     # Change this path to the directory where your .xmodel files are stored
     directory_path = "../../samples/Vendor Models"
 
-    print(f"Loading vendor model directory: {directory_path}")
+    #print(f"Loading vendor model directory: {directory_path}")
 
     vendor_models = load_xmodel_files(directory_path)
 
     # Print extracted models in a readable format
     if vendor_models:
-        print("Searching for..." + model_data[0]['name'])
+        #print("Searching for..." + model_data[0]['name'])
         classify_custom(model_data[0], vendor_models)

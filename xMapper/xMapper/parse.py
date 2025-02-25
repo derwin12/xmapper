@@ -58,10 +58,10 @@ def parse_models(xml_string, vendor_models):
         model_data = {attr: model.get(attr) for attr in model.attrib}  # Store attributes
         # active = model.find("Active")
         if ('Active' in model_data):
-            print("Skipping inactive ", model_data['name'])
+            #print("Skipping inactive ", model_data['name'])
             continue
 
-        print("Working on ....", model_data['name'])
+        #print("Working on ....", model_data['name'])
         model_data["ModelType"] = classify_model(model_data, cache, vendor_models)  # Add model classification
         models.append(model_data)
 
@@ -108,8 +108,8 @@ def read_xml_file(file_path):
 if __name__ == "__main__":
     #source_xml_path = "c:/users/Daryl/PycharmProjects/xmapper/samples/simple/source/xlights_rgbeffects.xml"
     print(os.getcwd())
-    #source_xml_path = './samples/simple/source/v1/xlights_rgbeffects.xml'
-    source_xml_path = "F:/ShowFolderQA/xlights_rgbeffects.xml"
+    source_xml_path = 'c:/users/Daryl/PycharmProjects/xmapper/samples/simple/source/v1/xlights_rgbeffects.xml'
+    #source_xml_path = "F:/ShowFolderQA/xlights_rgbeffects.xml"
     source_xml = read_xml_file(source_xml_path)
 
     print(os.getcwd())
@@ -135,3 +135,6 @@ if __name__ == "__main__":
 
     #dump_group_keys_and_values(parsed_groups[0])
     print_group_types(parsed_groups, False)
+
+    print(parsed_models[0])
+    print(parsed_groups[0])

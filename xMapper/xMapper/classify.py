@@ -23,7 +23,7 @@ def classify_model(model, cache, vendor_models):
     description = model.get("description", "").lower()
     pixel_count = int(model.get("parm2", 0))
 
-    print("Classify: ", model['name'] + " - " + model['DisplayAs'])
+    #print("Classify: ", model['name'] + " - " + model['DisplayAs'])
     # if name in cache:
     #   print('Found in cache ', model['name'], cache[name])
     #  return cache[name]
@@ -55,7 +55,7 @@ def classify_model(model, cache, vendor_models):
             return model['Description']
 
     if (display_as == 'custom'):
-            print("Search custom models")
+            #print("Search custom models")
             cat = classify_custom(model, vendor_models)
             if (cat != ""):
                 cache['name'] = cat
@@ -65,7 +65,7 @@ def classify_model(model, cache, vendor_models):
     for key, model_type in MODEL_TYPES.items():
         if close_match(key, name, display_as, description):
             cache[name] = model_type
-            print("Close name match to", model_type)
+            #print("Close name match to", model_type)
             return model_type
         # else:
         #   print('Failed search', key, ' not found in ', name, display_as, description)
