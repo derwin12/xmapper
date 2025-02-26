@@ -19,8 +19,13 @@ def save_mapping_file(models, groups, mapping, filename="xlights_mapping.xmap"):
         # Then list all source-target pairs
         for item in mapping:
             for entry in item:
-                source = entry["available_model"]["name"]
-                target = entry["vendor_model"]["name"]
+                if 'available_model' in entry:
+                    source = entry["available_model"]["name"]
+                    target = entry["vendor_model"]["name"]
+                else:
+                    source = entry["available_group"]["attributes"]["name"]
+                    target = entry["vendor_group"]["attributes"]["name"]
+
                 f.write(f"{source}\t\t\t{target}\twhite\n")
 
     print(f"Mapping saved to {filename}")
@@ -35,10 +40,16 @@ def print_mapping(mapping):
     total_mappings = 0
 
     for item in mapping:
+        #print("Item=", item)
         for entry in item:
-            available_name = entry["available_model"]["name"]
-            vendor_name = entry["vendor_model"]["name"]
-            combined_score = entry["combined_score"]
+            if 'available_model' in entry:
+                available_name = entry["available_model"]["name"]
+                vendor_name = entry["vendor_model"]["name"]
+                combined_score = entry["combined_score"]
+            if 'available_group' in entry:
+                available_name = entry["available_group"]["attributes"]["name"]
+                vendor_name = entry["vendor_group"]["attributes"]["name"]
+                combined_score = entry["combined_score"]
 
             print(f"{available_name}  ==  {vendor_name}  (Score: {combined_score:.2f})")
             total_mappings += 1

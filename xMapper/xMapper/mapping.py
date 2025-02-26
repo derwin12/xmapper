@@ -89,48 +89,53 @@ def match_models(available_models, vendor_models, name_weight=0.8, type_weight=0
     model_matches.sort(key=lambda x: x['combined_score'], reverse=True)
     return model_matches
 
-def match_groups(available_models, vendor_models, name_weight=0.8, type_weight=0.2, threshold=0.6):
-    """Match models between the two sets based on name similarity."""
-    model_matches = []
+def match_groups(available_groups, vendor_groups, name_weight=0.8, type_weight=0.2, threshold=0.6):
+    """Match groups between the two sets based on name similarity."""
+    group_matches = []
+    print("-------------")
+    print("Avail", available_groups)
+    print("Vendor", vendor_groups)
 
-    for avail_model in available_models:
-        avail_name = avail_model.get('name', '')
-        avail_type = avail_model.get('ModelType', '')
+    for avail_group in available_groups:
+        avail_name = avail_group['attributes']['name']
+        avail_type = avail_group['attributes']['GroupType']
 
         best_match = None
         best_score = 0
         best_details = {}
 
-        for vendor_model in vendor_models:
-            vendor_name = vendor_model.get('name', '')
-            vendor_type = vendor_model.get('ModelType', '')
+        for vendor_group in vendor_groups:
+            vendor_name = vendor_group['attributes']['name']
+            vendor_type = vendor_group['attributes']['GroupType']
 
             # Calculate component similarities
             name_sim = string_similarity(avail_name, vendor_name)
             type_sim = string_similarity(avail_type, vendor_type)
+            print("Compare", avail_name, vendor_name, name_sim)
+            print("Compare", avail_type, vendor_type, type_sim)
 
             # Calculate weighted score
             combined_score = (name_weight * name_sim) + (type_weight * type_sim)
 
             if combined_score > best_score:
                 best_score = combined_score
-                best_match = vendor_model
+                best_match = vendor_group
                 best_details = {
                     'name_similarity': name_sim,
                     'type_similarity': type_sim
                 }
 
         if best_match and best_score >= threshold:
-            model_matches.append({
-                'available_model': avail_model,
-                'vendor_model': best_match,
+            group_matches.append({
+                'available_group': avail_group,
+                'vendor_group': best_match,
                 'combined_score': best_score,
                 'details': best_details
             })
 
     # Sort by combined score
-    model_matches.sort(key=lambda x: x['combined_score'], reverse=True)
-    return model_matches
+    group_matches.sort(key=lambda x: x['combined_score'], reverse=True)
+    return group_matches
 
 def get_match_score(name1, name2):
     """Get a match score between two names with various matching strategies."""
@@ -177,8 +182,6 @@ def create_mapping(available_models, available_groups, vendor_models, vendor_gro
     if group_matches:
         mapping.append(group_matches)
 
-    print('=========BOTH===================')
-    print(mapping)
     return mapping
 
     for group1 in available_groups:
